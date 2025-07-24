@@ -1,0 +1,98 @@
+/* Background Gradient and Decoration */
+.bg-radial-gradient {
+    background: radial-gradient(circle at center, rgba(255, 179, 0, 0.15), rgba(0, 43, 39, 0.1));
+    position: absolute;
+    width: 150%;
+    height: 100%;
+    transform: translate(-50%, -50%) scale(1.5);
+    top: 50%;
+    left: 50%;
+    animation: bgMove 8s infinite alternate;
+    filter: blur(80px);
+    z-index: -1; /* Ensures background is behind other content */
+  }
+  
+  /* Keyframe Animation for Background Movement */
+  @keyframes bgMove {
+    0% {
+      transform: translate(-50%, -50%) scale(1.5);
+    }
+    100% {
+      transform: translate(-40%, -60%) scale(1.8);
+    }
+  }
+  
+  /* Perspective and 3D Effects */
+  .perspective-1000 {
+    perspective: 1000px; /* Sets a perspective for 3D effects */
+  }
+  
+  .gift-box-container {
+    position: relative;
+    width: 100%;
+    height: auto;
+    transform-style: preserve-3d; /* Enable 3D space */
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+  }
+  
+  .gift-box {
+    transform-style: preserve-3d;
+    transition: transform 0.6s ease, box-shadow 0.6s ease;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 20px 40px rgba(0, 0, 0, 0.1);
+    backface-visibility: hidden; /* Hide back face of the element */
+  }
+  
+  .gift-box:hover {
+    transform: rotateY(25deg) rotateX(15deg) translateZ(30px);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2), 0 30px 50px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Additional 3D Effects for Main Container */
+  .hover\\:rotate-3d:hover {
+    transform: rotateX(10deg) rotateY(10deg);
+  }
+  
+  .gift-box-decoration {
+    background: radial-gradient(circle, rgba(255, 179, 0, 0.6), rgba(0, 95, 79, 0.6));
+    filter: blur(20px);
+    opacity: 0.5;
+    transform: translateZ(-30px); /* 3D effect for background decoration */
+  }
+  
+  /* Animation for hovering over the gift box */
+  @keyframes wiggle {
+    0%, 100% {
+      transform: rotateY(0) rotateX(0);
+    }
+    25% {
+      transform: rotateY(10deg) rotateX(5deg);
+    }
+    50% {
+      transform: rotateY(-10deg) rotateX(-5deg);
+    }
+    75% {
+      transform: rotateY(5deg) rotateX(-10deg);
+    }
+  }
+  
+  .gift-box:hover {
+    animation: wiggle 2s ease-in-out infinite;
+  }
+  
+  /* Additional styles for better aesthetics */
+  button:hover {
+    animation: buttonPop 0.3s ease-out forwards;
+  }
+  
+  @keyframes buttonPop {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
