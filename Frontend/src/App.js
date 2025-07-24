@@ -5,9 +5,9 @@ import Home from './Pages/Home';
 import Bookambulance from './Pages/Bookambulance';
 import About from './Pages/About';
 import Contact from './Pages/Contact';
-import Hospital from './Pages/Hospital';
-import Madeby from './Pages/Madeby';
-import Track from './Pages/Track';
+import Hospital from './Pages/Optimizer';
+import Analytics from './Pages/Analytics';
+import Login from './Pages/Login';
 
 const App = () => {
   return (
@@ -18,9 +18,9 @@ const App = () => {
           <Route path="/bookambulance" element={<Bookambulance />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/hospital" element={<Hospital />} />
-          <Route path="/madeby" element={<Madeby />} />
-          <Route path="/track" element={<Track />} />
+          <Route path="/optimizer" element={<Hospital />} />
+          <Route path="/analytics" element={<Analytics />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       {/* </div> */}
     </Router>
