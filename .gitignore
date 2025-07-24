@@ -1,0 +1,73 @@
+# =========================
+# Global
+# =========================
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.swp
+.env
+*.env.local
+.vscode/
+.idea/
+*.bak
+
+# =========================
+# Node.js / React Frontend
+# =========================
+Frontend/node_modules/
+Frontend/build/
+Frontend/.env.local
+Frontend/.env.development.local
+Frontend/.env.test.local
+Frontend/.env.production.local
+
+# Debug logs
+Frontend/npm-debug.log*
+Frontend/yarn-debug.log*
+Frontend/yarn-error.log*
+Frontend/package-lock.json
+Frontend/.parcel-cache
+Frontend/.next
+Frontend/out
+Frontend/dist
+
+# =========================
+# Python Backend
+# =========================
+Backend/__pycache__/
+Backend/*.pyc
+Backend/*.pyo
+Backend/*.pyd
+Backend/.Python
+Backend/env/
+Backend/venv/
+Backend/.venv/
+Backend/env.bak/
+Backend/venv.bak/
+Backend/.pytest_cache/
+Backend/.mypy_cache/
+Backend/.coverage
+Backend/coverage.xml
+Backend/instance/
+Backend/.env
+
+# Flask/Django specific
+Backend/db.sqlite3
+Backend/migrations/
+
+# =========================
+# IDE & Editor settings
+# =========================
+*.sublime-workspace
+*.sublime-project
+*.iml
+*.idea/
+.vscode/
+
+# =========================
+# OS generated files
+# =========================
+ehthumbs.db
+Icon?
+*.stackdump
