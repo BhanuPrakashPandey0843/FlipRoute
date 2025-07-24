@@ -1,3 +1,3 @@
 git add . 
-git commit -m " added the  front end set up and made a proper file structure "
+git commit -m " added the  Hero Section , Fooetr and FAq section "
 git push origin main 
