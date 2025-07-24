@@ -1,55 +1,62 @@
 import React from 'react';
+import { FaRoute, FaGasPump, FaClock } from 'react-icons/fa';
 
 const Counter = () => {
   return (
-    <div className="bg-[#165b61] text-white py-12 px-8 md:px-16 flex flex-col md:flex-row justify-between items-center space-y-12 md:space-y-0 md:space-x-16">
-      {/* Left Section with Title and Scroll Indicator */}
-      <div className="flex flex-col items-center md:items-start text-center md:text-left">
-        <h1 className="text-4xl md:text-5xl font-extrabold leading-tight mb-6 transform transition-transform duration-500 hover:scale-105">
-          Experience the speed of technology and the power of compassion with AmbuLINK—because every second counts in saving lives.
-        </h1>
-        <p className="hidden md:block text-base md:text-lg text-gray-300 tracking-wide mb-4 transform transition-transform duration-500 hover:translate-x-2">
-          Scroll Down
-        </p>
-        <div className="mt-2 animate-bounce transform hover:translate-y-2">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-8 w-8 md:h-10 md:w-10"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            aria-hidden="true"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M19 9l-7 7-7-7"
-            />
-          </svg>
-        </div>
-      </div>
+    <section className="relative bg-gradient-to-br from-[#0f766e] via-[#115e59] to-[#083b35] text-white py-16 px-6 md:px-16">
+      
+      
+      <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,white,transparent_60%)]"></div>
 
-      {/* Right Section with Content and Statistics */}
-      <div className="text-center md:text-left max-w-2xl">
-        <p className="mb-8 text-lg md:text-xl text-gray-100 leading-relaxed transform transition-transform duration-500 hover:scale-105">
-          Thank you for considering AmbuLINK for your emergency response needs. We are excited to collaborate with you on developing an innovative solution that can truly make a difference in critical moments. Our goal is to create a state-of-the-art system that not only optimizes ambulance routes in real-time but also integrates seamlessly with hospital databases and tracks ambulance movements live.
-        </p>
-        <div className="flex flex-col md:flex-row gap-8 justify-center md:justify-start">
-          <CounterStat number="408K+" description="People who have started therapy" />
-          <CounterStat number="33K+" description="Credentialed ready to help" />
-          <CounterStat number="3M+" description="Messages and live sessions" />
+ 
+      <div className="relative max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        
+      
+        <div className="text-center lg:text-left space-y-6">
+          <h1 className="text-4xl lg:text-5xl font-extrabold leading-snug">
+            Deliver Smarter with <span className="text-[#00E7C1]">FlipRoute</span>
+          </h1>
+          <p className="text-lg text-teal-100 leading-relaxed max-w-xl mx-auto lg:mx-0">
+            FlipRoute uses AI-powered route optimization to reduce delivery time, save fuel, and increase efficiency. 
+            Trusted by logistics companies and e-commerce businesses to plan smarter routes in seconds.
+          </p>
+
+          <div className="mt-4 flex justify-center lg:justify-start animate-bounce">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-[#00E7C1]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
         </div>
+
+        <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-6 justify-center lg:justify-start">
+          <CounterStat 
+            icon={<FaRoute className="text-[#00E7C1]" size={32} />} 
+            number="50K+" 
+            description="Optimized Delivery Routes" 
+          />
+          <CounterStat 
+            icon={<FaGasPump className="text-[#00E7C1]" size={32} />} 
+            number="20%" 
+            description="Average Fuel Cost Saved" 
+          />
+          <CounterStat 
+            icon={<FaClock className="text-[#00E7C1]" size={32} />} 
+            number="99%" 
+            description="Improved On-Time Deliveries" 
+          />
+        </div>
+
       </div>
-    </div>
+    </section>
   );
 };
 
-// Reusable component for each stat block with improved contrast and hover effects
-const CounterStat = ({ number, description }) => (
-  <div className="flex flex-col items-center md:items-start transform transition-transform duration-500 hover:-translate-y-2 hover:shadow-2xl shadow-lg p-6 rounded-lg bg-white">
-    <h2 className="text-3xl md:text-4xl font-bold text-black">{number}</h2>
-    <p className="text-base md:text-lg text-black">{description}</p>
+
+const CounterStat = ({ icon, number, description }) => (
+  <div className="flex flex-col items-center text-center lg:items-start lg:text-left bg-white/10 backdrop-blur-md p-6 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-white/20">
+    <div className="mb-3">{icon}</div>
+    <h2 className="text-3xl font-bold text-white">{number}</h2>
+    <p className="text-sm md:text-base text-teal-100 mt-2">{description}</p>
   </div>
 );
 

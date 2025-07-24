@@ -1,37 +1,36 @@
 import React from 'react';
 import { FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 
-const TherapyComparison = () => {
+const FlipRouteComparison = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-200 to-gray-300 flex items-center justify-center py-20 px-5">
-      <div className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-8 transform transition-all duration-300">
+    <div className="min-h-screen bg-gradient-to-b from-gray-100 to-gray-200 flex items-center justify-center py-20 px-5">
+      <div className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-8 transition-all duration-300">
         
-        {/* AmbuLINK - Paid Section */}
-        <div className="bg-gradient-to-r from-[#1b6f73] to-[#165b61] text-white p-12 rounded-lg shadow-xl hover:shadow-2xl transform hover:scale-105 transition-transform duration-500 ease-in-out hover:bg-gradient-to-br hover:from-[#165b61] hover:to-[#1b6f73] animate-fade-in">
+       
+        <div className="bg-gradient-to-r from-[#0f766e] to-[#115e59] text-white p-12 rounded-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-transform duration-500 ease-in-out hover:bg-gradient-to-br hover:from-[#115e59] hover:to-[#0f766e]">
           <h2 className="text-center text-4xl font-extrabold mb-10 tracking-wide">
-            AmbuLINK - Paid
+            FlipRoute <span className="text-[#00E7C1]">Premium</span>
           </h2>
           <ul className="space-y-6">
             {[
-              { text: 'Real-Time Ambulance Tracking', available: true },
-              { text: 'Optimized Route Planning', available: false },
-              { text: 'Emergency Booking System', available: true },
-              { text: 'Hospital Capacity Integration', available: true },
-              { text: 'Live Traffic Updates', available: true },
-              { text: 'Automated Dispatching', available: true },
-              { text: 'Pre-Arrival Hospital Notifications', available: true },
-              { text: 'Patient Medical History Sharing', available: true },
-              { text: 'Resource Allocation Management', available: true },
-              { text: 'Incident Reporting and Analytics', available: true },
-              { text: 'Mobile Application for Responders', available: true },
-              { text: 'Real-Time Ambulance Tracking', available: true },
+              { text: 'AI-Powered Route Optimization', available: true },
+              { text: 'Multi-Vehicle Fleet Optimization', available: true },
+              { text: 'Real-Time Traffic Integration', available: true },
+              { text: 'Google Maps & Distance Matrix API Support', available: true },
+              { text: 'Fuel & Time Cost Estimation', available: true },
+              { text: 'Live Route Recalculation', available: true },
+              { text: 'Advanced Delivery Analytics & Reports', available: true },
+              { text: 'Custom Delivery Constraints (Time Windows, Capacity)', available: true },
+              { text: 'CSV Import/Export for Delivery Locations', available: true },
+              { text: 'Cloud Storage & Route History', available: true },
+              { text: 'Priority Customer Support', available: true },
             ].map((item, index) => (
               <li key={index} className="flex items-center space-x-3 text-lg">
                 <span
                   aria-hidden="true"
-                  className={`text-2xl ${item.available ? 'text-green-300' : 'text-red-400'}`}
+                  className="text-2xl text-green-300"
                 >
-                  {item.available ? <FaCheckCircle /> : <FaTimesCircle />}
+                  <FaCheckCircle />
                 </span>
                 <span>{item.text}</span>
               </li>
@@ -39,25 +38,23 @@ const TherapyComparison = () => {
           </ul>
         </div>
 
-        {/* AmbuLINK - Unpaid Section */}
-        <div className="bg-gradient-to-r from-[#1b6f73] to-[#165b61] text-white p-12 rounded-lg shadow-xl hover:shadow-2xl transform hover:scale-105 transition-transform duration-500 ease-in-out hover:bg-gradient-to-br hover:from-[#165b61] hover:to-[#1b6f73] animate-fade-in">
+        <div className="bg-gradient-to-r from-[#0f766e] to-[#115e59] text-white p-12 rounded-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-transform duration-500 ease-in-out hover:bg-gradient-to-br hover:from-[#115e59] hover:to-[#0f766e]">
           <h2 className="text-center text-4xl font-extrabold mb-10 tracking-wide">
-            AmbuLINK - Unpaid
+            FlipRoute <span className="text-gray-300">Free</span>
           </h2>
           <ul className="space-y-6">
             {[
-                  { text: 'Real-Time Ambulance Tracking', available: true },
-                  { text: 'Optimized Route Planning', available: false },
-                  { text: 'Emergency Booking System', available: true },
-                  { text: 'Hospital Capacity Integration', available: false },
-                  { text: 'Live Traffic Updates', available: false },
-                  { text: 'Automated Dispatching', available: false },
-                  { text: 'Pre-Arrival Hospital Notifications', available: false },
-                  { text: 'Patient Medical History Sharing', available: false },
-                  { text: 'Resource Allocation Management', available: false },
-                  { text: 'Incident Reporting and Analytics', available: false },
-                  { text: 'Mobile Application for Responders', available: false },
-                  { text: 'Real-Time Ambulance Tracking', available: false },
+              { text: 'AI-Powered Route Optimization', available: true },
+              { text: 'Multi-Vehicle Fleet Optimization', available: false },
+              { text: 'Real-Time Traffic Integration', available: false },
+              { text: 'Google Maps & Distance Matrix API Support', available: false },
+              { text: 'Fuel & Time Cost Estimation', available: false },
+              { text: 'Live Route Recalculation', available: false },
+              { text: 'Advanced Delivery Analytics & Reports', available: false },
+              { text: 'Custom Delivery Constraints (Time Windows, Capacity)', available: false },
+              { text: 'CSV Import/Export for Delivery Locations', available: false },
+              { text: 'Cloud Storage & Route History', available: false },
+              { text: 'Priority Customer Support', available: false },
             ].map((item, index) => (
               <li key={index} className="flex items-center space-x-3 text-lg">
                 <span
@@ -77,4 +74,4 @@ const TherapyComparison = () => {
   );
 };
 
-export default TherapyComparison;
+export default FlipRouteComparison;

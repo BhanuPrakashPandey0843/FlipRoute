@@ -1,4 +1,4 @@
-/* ✅ FAQ Container */
+
 .faq-container {
   width: 100%;
   min-height: 100vh;
@@ -9,14 +9,14 @@
   padding: 3rem 1rem;
 }
 
-/* ✅ Section Wrapper */
+
 .faq-section {
   width: 100%;
   max-width: 900px;
   margin: 0 auto;
 }
 
-/* ✅ Title & Subtitle */
+
 .faq-title {
   font-size: 2rem;
   font-weight: bold;
@@ -34,14 +34,14 @@
   line-height: 1.5;
 }
 
-/* ✅ FAQ Items */
+
 .faq-items {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
-/* ✅ FAQ Card */
+
 .faq-item {
   background: white;
   border: 1px solid #e5e7eb;
@@ -54,7 +54,6 @@
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
 }
 
-/* ✅ Question Button */
 .faq-question {
   width: 100%;
   background: #f9fafb;
@@ -75,7 +74,7 @@
   background: #f3f4f6;
 }
 
-/* ✅ Dropdown Icon */
+
 .faq-icon {
   font-size: 1.2rem;
   color: #0f766e;
@@ -86,7 +85,6 @@
   transform: rotate(180deg);
 }
 
-/* ✅ Answer Section */
 .faq-content {
   max-height: 0;
   overflow: hidden;
@@ -105,7 +103,7 @@
   background: #ffffff;
 }
 
-/* ✅ Responsive Styles */
+
 @media (max-width: 768px) {
   .faq-title {
     font-size: 1.75rem;

@@ -1,84 +1,114 @@
 import React from 'react';
-import AmbuLINK from './AmbuLINK.png';
 
 const Howwork = () => {
+  const FlipRouteImage =
+    'https://media.giphy.com/media/jt4feJ5xwfoXK/giphy.gif'; //
+
   return (
-    <div className="flex flex-col lg:flex-row items-center justify-center bg-white py-16 px-6 md:px-12 lg:px-24">
+    <section className="relative flex flex-col lg:flex-row items-center justify-center bg-gradient-to-b from-white to-gray-50 py-16 px-6 md:px-12 lg:px-24 overflow-hidden">
       
-      {/* Left Section: Steps */}
-      <div className="flex flex-col items-center lg:items-start lg:w-1/2 lg:pr-12 mb-12 lg:mb-0">
-        {/* Heading Section */}
-        <div className="text-center lg:text-left mb-8">
-          <h2 className="text-3xl font-semibold text-gray-800 mb-4">
-          What We Do at AmbuLINK ?
+  
+      <div className="absolute -top-16 -left-16 w-72 h-72 bg-teal-100 rounded-full blur-3xl opacity-30 animate-pulse"></div>
+      <div className="absolute -bottom-16 -right-16 w-72 h-72 bg-teal-200 rounded-full blur-3xl opacity-20 animate-pulse"></div>
+
+      <div className="flex flex-col items-center lg:items-start lg:w-1/2 lg:pr-12 mb-12 lg:mb-0 z-10">
+        
+    
+        <div className="text-center lg:text-left mb-10 animate-fadeIn">
+          <h2 className="text-4xl font-extrabold text-gray-800 mb-4 leading-snug">
+            How <span className="text-teal-600">FlipRoute</span> Works
           </h2>
           <p className="text-gray-600 max-w-xl">
-           At AmbuLINK, we streamline emergency medical response by offering seamless ambulance booking and live tracking, advanced real-time route optimization, and efficient hospital booking with up-to-date capacity information. Our solutions ensure rapid, coordinated care and improved response times, ultimately enhancing patient outcomes.
+            FlipRoute simplifies last-mile delivery by using AI-powered route optimization, 
+            real-time traffic integration, and smart fleet management tools to reduce operational costs 
+            and improve on-time deliveries.
           </p>
         </div>
-        
-        {/* Steps Section */}
-        <div className="grid grid-cols-1 gap-8">
-          {/* Step 1 */}
-          <div className="flex items-start bg-white shadow-lg rounded-lg p-4 transform hover:scale-105 transition-transform duration-300">
-            <div className="flex-shrink-0 bg-gray-100 p-3 rounded-full">
-              {/* Icon Placeholder */}
-              <svg className="h-6 w-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 20l-2-2m0 0l-2 2m2-2V4m0 0l2-2m-2 2h10"></path>
+  
+        <div className="space-y-6 w-full">
+          <StepCard
+            title="AI-Powered Route Optimization"
+            description="Upload delivery addresses and let FlipRoute generate the most efficient routes, saving time and fuel."
+            icon={
+              <svg
+                className="h-6 w-6 text-teal-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M9 17v-4h6v4m-3-4v-4m0-4h.01"
+                />
               </svg>
-            </div>
-            <div className="ml-4">
-              <h3 className="text-lg font-semibold text-gray-800">Ambulance Booking & Live Tracking. </h3>
-              <p className="text-gray-600 mt-2">
-              Seamlessly book ambulances and track their live location for efficient emergency response.
-              </p>
-            </div>
-          </div>
+            }
+          />
 
-          {/* Step 2 */}
-          <div className="flex items-start bg-teal-600 shadow-lg rounded-lg p-4 text-white transform hover:scale-105 transition-transform duration-300">
-            <div className="flex-shrink-0 bg-white p-3 rounded-full">
-              {/* Icon Placeholder */}
-              <svg className="h-6 w-6 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a2 2 0 100-4 2 2 0 000 4zm-6 2a6 6 0 016 6v4H4v-4a6 6 0 016-6z"></path>
+          <StepCard
+            title="Multi-Vehicle Fleet Management"
+            description="Assign deliveries across multiple vehicles with intelligent workload balancing to maximize efficiency."
+            icon={
+              <svg
+                className="h-6 w-6 text-teal-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M16 7a4 4 0 00-8 0v4H4v6h16v-6h-4V7z"
+                />
               </svg>
-            </div>
-            <div className="ml-4">
-              <h3 className="text-lg font-semibold">Real-Time Route Optimization System.</h3>
-              <p className="mt-2">
-              Optimize ambulance routes in real-time to ensure the fastest arrival during emergencies.
-              </p>
-            </div>
-          </div>
+            }
+          />
 
-          {/* Step 3 */}
-          <div className="flex items-start bg-white shadow-lg rounded-lg p-4 transform hover:scale-105 transition-transform duration-300">
-            <div className="flex-shrink-0 bg-gray-100 p-3 rounded-full">
-              {/* Icon Placeholder */}
-              <svg className="h-6 w-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 10h.01M12 14h.01M16 18h.01M21 12h.01M12 4h.01M3 12h.01M12 21h.01"></path>
+          <StepCard
+            title="Real-Time Traffic Integration"
+            description="FlipRoute adapts to live traffic data, rerouting deliveries dynamically for the fastest possible arrival."
+            icon={
+              <svg
+                className="h-6 w-6 text-teal-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M17 17h2V7h-2M7 17h2V7H7"
+                />
               </svg>
-            </div>
-            <div className="ml-4">
-              <h3 className="text-lg font-semibold text-gray-800">Hospital Booking System.</h3>
-              <p className="text-gray-600 mt-2">
-              Efficiently manage hospital bookings and coordinate resources with real-time capacity updates and pre-arrival notifications.
-              </p>
-            </div>
-          </div>
+            }
+          />
         </div>
       </div>
 
-      {/* Right Section: Image */}
-      <div className="flex justify-center lg:justify-end lg:w-1/2">
-        <img 
-          src={AmbuLINK} 
-          alt="Therapist consulting with a patient" 
-          className="rounded-lg shadow-lg w-full max-w-md" 
+    
+      <div className="flex justify-center lg:justify-end lg:w-1/2 relative animate-fadeIn delay-200">
+        <img
+          src={FlipRouteImage}
+          alt="FlipRoute Route Optimization Animation"
+          className="rounded-xl shadow-xl w-full max-w-md transform hover:scale-105 transition-transform duration-500"
         />
       </div>
-    </div>
+    </section>
   );
 };
+
+
+const StepCard = ({ title, description, icon }) => (
+  <div className="flex items-start bg-white hover:bg-teal-50 shadow-lg rounded-xl p-5 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+    <div className="flex-shrink-0 bg-teal-100 p-3 rounded-full">{icon}</div>
+    <div className="ml-4">
+      <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
+      <p className="text-gray-600 mt-2">{description}</p>
+    </div>
+  </div>
+);
 
 export default Howwork;
