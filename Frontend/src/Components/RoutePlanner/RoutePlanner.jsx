@@ -1,8 +1,44 @@
-
 import { useState } from 'react';
 import axios from 'axios';
-import { MapContainer, TileLayer, Polyline } from 'react-leaflet';
+import {
+  MapContainer,
+  TileLayer,
+  Polyline,
+  Marker,
+} from 'react-leaflet';
+import L from 'leaflet';
 import { FaPlus, FaTrash, FaRoute } from 'react-icons/fa';
+import 'leaflet/dist/leaflet.css';
+
+// Red icon (start)
+const redIcon = new L.Icon({
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+
+// Green icon (waypoints)
+const greenIcon = new L.Icon({
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
+  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+
+// Blue icon (destination)
+const blueIcon = new L.Icon({
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png',
+  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
 
 export default function RoutePlanner() {
   const [start, setStart] = useState('');
@@ -16,7 +52,8 @@ export default function RoutePlanner() {
   const [loading, setLoading] = useState(false);
 
   const addWaypoint = () => setWaypoints([...waypoints, '']);
-  const removeWaypoint = (index) => setWaypoints(waypoints.filter((_, i) => i !== index));
+  const removeWaypoint = (index) =>
+    setWaypoints(waypoints.filter((_, i) => i !== index));
   const updateWaypoint = (index, value) => {
     const newWps = [...waypoints];
     newWps[index] = value;
@@ -54,13 +91,11 @@ export default function RoutePlanner() {
 
   return (
     <div className="flex flex-col lg:flex-row h-screen overflow-hidden">
-    
       <div className="w-full lg:w-1/3 bg-white p-6 shadow-xl overflow-auto h-full space-y-6">
         <h1 className="text-3xl font-extrabold text-[#4F46E5] flex items-center gap-2">
           <FaRoute /> India Route Planner
         </h1>
 
-     
         <div className="space-y-1">
           <label className="font-semibold">Start Location</label>
           <input
@@ -72,7 +107,6 @@ export default function RoutePlanner() {
           />
         </div>
 
-       
         <div>
           <p className="font-semibold mb-2">Waypoints</p>
           <div className="space-y-2">
@@ -102,7 +136,6 @@ export default function RoutePlanner() {
           </button>
         </div>
 
-      
         <div className="space-y-1">
           <label className="font-semibold">Destination</label>
           <input
@@ -114,7 +147,6 @@ export default function RoutePlanner() {
           />
         </div>
 
-       
         <div className="space-y-1">
           <label className="font-semibold">Optimize For</label>
           <select
@@ -127,23 +159,24 @@ export default function RoutePlanner() {
           </select>
         </div>
 
-        
         <button
           onClick={fetchRoute}
           disabled={loading}
           className={`w-full py-2 text-white font-semibold rounded ${
-            loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'
+            loading
+              ? 'bg-gray-400 cursor-not-allowed'
+              : 'bg-blue-600 hover:bg-blue-700'
           }`}
         >
           {loading ? 'Calculating Route...' : 'Find Route'}
         </button>
 
-       
         {error && (
-          <div className="p-3 bg-red-100 text-red-700 rounded font-semibold">{error}</div>
+          <div className="p-3 bg-red-100 text-red-700 rounded font-semibold">
+            {error}
+          </div>
         )}
 
-  
         {distance && time && (
           <div className="bg-gray-50 rounded p-4 shadow space-y-2">
             <p>
@@ -156,7 +189,6 @@ export default function RoutePlanner() {
         )}
       </div>
 
-     
       <div className="flex-1 h-full">
         <MapContainer
           center={[22.9734, 78.6569]}
@@ -165,7 +197,26 @@ export default function RoutePlanner() {
           style={{ width: '100%', height: '100%' }}
         >
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-          {route.length > 0 && <Polyline positions={route} color="red" />}
+
+          {route.length > 0 && (
+            <>
+              <Polyline positions={route} color="blue" />
+
+              {/* Start marker */}
+              <Marker position={route[0]} icon={redIcon} />
+
+              {/* Waypoints */}
+              {route.slice(1, -1).map((coord, idx) => (
+                <Marker key={idx} position={coord} icon={greenIcon} />
+              ))}
+
+              {/* End marker */}
+              <Marker
+                position={route[route.length - 1]}
+                icon={blueIcon}
+              />
+            </>
+          )}
         </MapContainer>
       </div>
     </div>
