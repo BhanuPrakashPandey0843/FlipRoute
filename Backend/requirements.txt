@@ -1,5 +1,3 @@
-fastapi
-uvicorn
-googlemaps
-ortools
-python-dotenv
+flask
+geopy
+flask-cors
