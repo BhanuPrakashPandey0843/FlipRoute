@@ -5,40 +5,47 @@ import {
   TileLayer,
   Polyline,
   Marker,
+  useMap,
+  Popup,
 } from 'react-leaflet';
 import L from 'leaflet';
-import { FaPlus, FaTrash, FaRoute } from 'react-icons/fa';
+import {
+  FaMapMarkerAlt,
+  FaMapPin,
+  FaLocationArrow,
+  FaPlus,
+  FaTrash,
+  FaRoute,
+} from 'react-icons/fa';
 import 'leaflet/dist/leaflet.css';
+import { renderToStaticMarkup } from 'react-dom/server';
 
-// Red icon (start)
-const redIcon = new L.Icon({
-  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
-  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  shadowSize: [41, 41]
-});
+// Custom DivIcons using React Icons
+const createDivIcon = (icon, color, label = '') =>
+  L.divIcon({
+    html: renderToStaticMarkup(
+      <div style={{ textAlign: 'center' }}>
+        <div style={{ color, fontSize: '1.5rem' }}>{icon}</div>
+        {label && <div style={{ color: 'black', fontSize: '0.8rem' }}>{label}</div>}
+      </div>
+    ),
+    className: 'custom-div-icon',
+    iconSize: [30, 42],
+    iconAnchor: [15, 42],
+    popupAnchor: [0, -40],
+  });
 
-// Green icon (waypoints)
-const greenIcon = new L.Icon({
-  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
-  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  shadowSize: [41, 41]
-});
+const startIcon = createDivIcon(<FaMapMarkerAlt />, 'red', 'Start');
+const endIcon = createDivIcon(<FaLocationArrow />, 'blue', 'End');
 
-// Blue icon (destination)
-const blueIcon = new L.Icon({
-  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png',
-  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  shadowSize: [41, 41]
-});
+function FitBounds({ coords }) {
+  const map = useMap();
+  if (coords.length > 0) {
+    const bounds = L.latLngBounds(coords);
+    map.fitBounds(bounds, { padding: [50, 50] });
+  }
+  return null;
+}
 
 export default function RoutePlanner() {
   const [start, setStart] = useState('');
@@ -46,6 +53,7 @@ export default function RoutePlanner() {
   const [end, setEnd] = useState('');
   const [optimize, setOptimize] = useState('time');
   const [route, setRoute] = useState([]);
+  const [stops, setStops] = useState([]);
   const [distance, setDistance] = useState(null);
   const [time, setTime] = useState(null);
   const [error, setError] = useState('');
@@ -63,6 +71,7 @@ export default function RoutePlanner() {
   const fetchRoute = async () => {
     setError('');
     setRoute([]);
+    setStops([]);
     setDistance(null);
     setTime(null);
     setLoading(true);
@@ -70,7 +79,7 @@ export default function RoutePlanner() {
     try {
       const res = await axios.post('http://127.0.0.1:8000/route', {
         start,
-        waypoints,
+        waypoints: waypoints.filter((w) => w.trim() !== ''),
         end,
         optimize,
       });
@@ -78,12 +87,14 @@ export default function RoutePlanner() {
       if (res.data.error) {
         setError(res.data.error);
       } else {
-        setRoute(res.data.route_coords);
+        setRoute(res.data.route || []);
+        setStops(res.data.stops || []);
         setDistance(res.data.distance_km);
         setTime(res.data.travel_time_min);
       }
     } catch (err) {
-      setError('Failed to fetch route. Backend not responding.');
+      console.error(err);
+      setError('Failed to fetch route. Backend may be offline.');
     }
 
     setLoading(false);
@@ -91,37 +102,36 @@ export default function RoutePlanner() {
 
   return (
     <div className="flex flex-col lg:flex-row h-screen overflow-hidden">
+      {/* Sidebar */}
       <div className="w-full lg:w-1/3 bg-white p-6 shadow-xl overflow-auto h-full space-y-6">
-        <h1 className="text-3xl font-extrabold text-[#4F46E5] flex items-center gap-2">
+        <h1 className="text-3xl font-extrabold text-indigo-700 flex items-center gap-2">
           <FaRoute /> India Route Planner
         </h1>
 
-        <div className="space-y-1">
-          <label className="font-semibold">Start Location</label>
+        <div>
+          <label className="font-semibold">Start</label>
           <input
-            type="text"
             value={start}
             onChange={(e) => setStart(e.target.value)}
-            placeholder="e.g., Mumbai"
-            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            placeholder="e.g. Ranchi Station"
+            className="w-full p-2 border rounded"
           />
         </div>
 
         <div>
-          <p className="font-semibold mb-2">Waypoints</p>
+          <label className="font-semibold">Waypoints</label>
           <div className="space-y-2">
             {waypoints.map((wp, index) => (
               <div key={index} className="flex gap-2">
                 <input
-                  type="text"
                   value={wp}
                   onChange={(e) => updateWaypoint(index, e.target.value)}
                   placeholder={`Waypoint ${index + 1}`}
-                  className="p-2 border rounded w-full focus:outline-none focus:ring-2 focus:ring-indigo-300"
+                  className="p-2 border rounded w-full"
                 />
                 <button
                   onClick={() => removeWaypoint(index)}
-                  className="bg-red-500 hover:bg-red-600 text-white p-2 rounded"
+                  className="bg-red-500 text-white p-2 rounded"
                 >
                   <FaTrash />
                 </button>
@@ -130,91 +140,95 @@ export default function RoutePlanner() {
           </div>
           <button
             onClick={addWaypoint}
-            className="mt-2 flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded"
+            className="mt-2 bg-green-600 text-white px-3 py-2 rounded flex items-center gap-1"
           >
             <FaPlus /> Add Waypoint
           </button>
         </div>
 
-        <div className="space-y-1">
-          <label className="font-semibold">Destination</label>
+        <div>
+          <label className="font-semibold">End</label>
           <input
-            type="text"
             value={end}
             onChange={(e) => setEnd(e.target.value)}
-            placeholder="e.g., Delhi"
-            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            placeholder="e.g. Airport"
+            className="w-full p-2 border rounded"
           />
         </div>
 
-        <div className="space-y-1">
+        <div>
           <label className="font-semibold">Optimize For</label>
           <select
             value={optimize}
             onChange={(e) => setOptimize(e.target.value)}
-            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            className="w-full p-2 border rounded"
           >
-            <option value="time">Fastest Route (Time)</option>
-            <option value="distance">Shortest Route (Distance)</option>
+            <option value="time">Time</option>
+            <option value="distance">Distance</option>
           </select>
         </div>
 
         <button
           onClick={fetchRoute}
           disabled={loading}
-          className={`w-full py-2 text-white font-semibold rounded ${
-            loading
-              ? 'bg-gray-400 cursor-not-allowed'
-              : 'bg-blue-600 hover:bg-blue-700'
+          className={`w-full py-2 mt-4 text-white font-bold rounded ${
+            loading ? 'bg-gray-400' : 'bg-blue-600 hover:bg-blue-700'
           }`}
         >
-          {loading ? 'Calculating Route...' : 'Find Route'}
+          {loading ? 'Loading...' : 'Get Route'}
         </button>
 
-        {error && (
-          <div className="p-3 bg-red-100 text-red-700 rounded font-semibold">
-            {error}
-          </div>
-        )}
+        {error && <p className="text-red-600 mt-2">{error}</p>}
 
         {distance && time && (
-          <div className="bg-gray-50 rounded p-4 shadow space-y-2">
+          <div className="bg-gray-100 rounded p-4 mt-4">
             <p>
-              <strong>Distance:</strong> {distance} km
+              <strong>Distance:</strong> {distance.toFixed(2)} km
             </p>
             <p>
-              <strong>Estimated Time:</strong> {time} minutes
+              <strong>ETA:</strong> {time.toFixed(1)} minutes
             </p>
           </div>
         )}
       </div>
 
+      {/* Map Section */}
       <div className="flex-1 h-full">
         <MapContainer
-          center={[22.9734, 78.6569]}
-          zoom={5}
+          center={[23.3441, 85.3096]}
+          zoom={13}
           scrollWheelZoom={true}
-          style={{ width: '100%', height: '100%' }}
+          style={{ height: '100%', width: '100%' }}
         >
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
           {route.length > 0 && (
             <>
+              <FitBounds coords={route} />
               <Polyline positions={route} color="blue" />
 
-              {/* Start marker */}
-              <Marker position={route[0]} icon={redIcon} />
+              {stops.map((pos, idx) => {
+                if (idx === 0)
+                  return (
+                    <Marker key={idx} position={pos} icon={startIcon}>
+                      <Popup>Start</Popup>
+                    </Marker>
+                  );
+                if (idx === stops.length - 1)
+                  return (
+                    <Marker key={idx} position={pos} icon={endIcon}>
+                      <Popup>End</Popup>
+                    </Marker>
+                  );
 
-              {/* Waypoints */}
-              {route.slice(1, -1).map((coord, idx) => (
-                <Marker key={idx} position={coord} icon={greenIcon} />
-              ))}
-
-              {/* End marker */}
-              <Marker
-                position={route[route.length - 1]}
-                icon={blueIcon}
-              />
+                const waypointNumber = idx;
+                const icon = createDivIcon(<FaMapPin />, 'green', `${waypointNumber}`);
+                return (
+                  <Marker key={idx} position={pos} icon={icon}>
+                    <Popup>Waypoint {waypointNumber}</Popup>
+                  </Marker>
+                );
+              })}
             </>
           )}
         </MapContainer>
