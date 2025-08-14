@@ -3,5 +3,5 @@ geopy
 flask-cors
 osmnx
 networkx
+scikit-learn
 
-pip install osmnx networkx
